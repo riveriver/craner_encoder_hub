@@ -2,6 +2,18 @@ cmake_minimum_required(VERSION 3.20.0)
 
 list(APPEND BOARD_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
+# Make module defaults effective while allowing the product's EXTRA_CONF_FILE
+# to provide board/product-specific overrides (such as Broker credentials).
+file(GLOB module_conf_files
+	CONFIGURE_DEPENDS
+	"${CMAKE_CURRENT_SOURCE_DIR}/module/*/*.conf"
+)
+
+set(CONF_FILE
+	${CMAKE_CURRENT_SOURCE_DIR}/prj.conf
+	${module_conf_files}
+)
+
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(craner_sensor_hub)
 
