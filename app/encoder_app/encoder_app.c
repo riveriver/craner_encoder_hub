@@ -10,6 +10,7 @@
 #include "idecoder_encoder_modbus.h"
 #include "modbus_data_model.h"
 #include "system_health_app.h"
+#include "sensor_manage_service.h"
 
 LOG_MODULE_REGISTER(encoder_app, CONFIG_LOG_DEFAULT_LEVEL);
 
@@ -182,6 +183,7 @@ static int encoder_app_init(void)
 	int err;
 
 #if defined(CONFIG_ENABLE_SLEWING_ENCODER)
+	if (sensor_manage_is_enabled(SENSOR_MANAGE_SLEWING)) {
 	err = encoder_sample_service_start(&slewing_encoder_service,
 					   &slewing_encoder_config,
 					   encoder_sample_cb,
@@ -190,9 +192,11 @@ static int encoder_app_init(void)
 		LOG_ERR("Failed to start slewing encoder service: %d", err);
 		return err;
 	}
+	}
 #endif
 
 #if defined(CONFIG_ENABLE_LUFFING_ENCODER)
+	if (sensor_manage_is_enabled(SENSOR_MANAGE_LUFFING)) {
 	err = encoder_sample_service_start(&luffing_encoder_service,
 					   &luffing_encoder_config,
 					   encoder_sample_cb,
@@ -201,9 +205,11 @@ static int encoder_app_init(void)
 		LOG_ERR("Failed to start luffing encoder service: %d", err);
 		return err;
 	}
+	}
 #endif
 
 #if defined(CONFIG_ENABLE_HOISTING_ENCODER)
+	if (sensor_manage_is_enabled(SENSOR_MANAGE_HOISTING)) {
 	err = encoder_sample_service_start(&hoisting_encoder_service,
 					   &hoisting_encoder_config,
 					   encoder_sample_cb,
@@ -211,6 +217,7 @@ static int encoder_app_init(void)
 	if (err != 0) {
 		LOG_ERR("Failed to start hoisting encoder service: %d", err);
 		return err;
+	}
 	}
 #endif
 

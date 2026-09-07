@@ -11,6 +11,7 @@
 
 #include "modbus_data_model.h"
 #include "system_health_app.h"
+#include "sensor_manage_service.h"
 
 LOG_MODULE_REGISTER(anemometer_load_app, CONFIG_LOG_DEFAULT_LEVEL);
 
@@ -84,6 +85,7 @@ static void write_load_adc_error(int err)
 	load_state.last_error = err;
 	load_state.online = false;
 	k_mutex_unlock(&load_lock);
+	system_health_update_event(SYSTEM_HEALTH_READ_LOAD_ADC);
 }
 
 static void write_load_adc(uint16_t value)
@@ -174,6 +176,7 @@ static void sensor_thread_entry(void *p1, void *p2, void *p3)
 		int err;
 
 		#if defined(CONFIG_ENABLE_ANEMOMETER_SENSOR)
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_ANEMOMETER)) {
 		err = modbus_read_input_regs(iface, ANEMOMETER_UNIT,
 					      ANEMOMETER_ADDR, anemometer_regs,
 					      ANEMOMETER_COUNT);
@@ -182,15 +185,18 @@ static void sensor_thread_entry(void *p1, void *p2, void *p3)
 		} else {
 			write_anemometer_error(err);
 		}
+		}
 		#endif
 
 		#if defined(CONFIG_ENABLE_READ_LOAD_SENSOR)
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_LOAD_ADC)) {
 		err = modbus_read_input_regs(iface, LOAD_ADC_UNIT, LOAD_ADC_ADDR,
 					      load_adc_regs, LOAD_ADC_COUNT);
 		if (err == 0 && load_adc_regs[0] <= 4095U) {
 			write_load_adc(load_adc_regs[0]);
 		} else {
 			write_load_adc_error(err != 0 ? err : -ERANGE);
+		}
 		}
 		#endif
 
@@ -205,6 +211,10 @@ static int anemometer_load_app_init(void)
 	    !defined(CONFIG_ENABLE_READ_LOAD_SENSOR)
 	return 0;
 	#else
+	if (!sensor_manage_is_enabled(SENSOR_MANAGE_ANEMOMETER) &&
+	    !sensor_manage_is_enabled(SENSOR_MANAGE_LOAD_ADC)) {
+		return 0;
+	}
 	k_thread_create(&sensor_thread, sensor_stack,
 			K_THREAD_STACK_SIZEOF(sensor_stack), sensor_thread_entry,
 			NULL, NULL, NULL, K_PRIO_PREEMPT(CONFIG_ANEMOMETER_THREAD_PRIORITY),

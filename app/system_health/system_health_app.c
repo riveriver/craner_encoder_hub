@@ -1,5 +1,6 @@
 #include "system_health_app.h"
 #include "time_manager_service.h"
+#include "sensor_manage_service.h"
 
 #include <errno.h>
 
@@ -87,6 +88,15 @@ const struct sys_health_event system_health_app_event_table[] = {
 		.offline_first_func = log_offline_event,
 		.online_first_func = log_online_event,
 	},
+	{
+		.event = SYSTEM_HEALTH_READ_LOAD_ADC,
+		.name = "load_adc",
+		.enable = IS_ENABLED(CONFIG_ENABLE_READ_LOAD_SENSOR),
+		.priority = 7,
+		.offline_timeout_ms = 3000,
+		.offline_first_func = log_offline_event,
+		.online_first_func = log_online_event,
+	},
 };
 
 const int system_health_app_event_table_size =
@@ -124,6 +134,13 @@ static int system_health_app_init(void)
 			      &time_provider);
 	if (err != 0) {
 		LOG_ERR("Failed to initialize system health app: %d", err);
+	}
+	if (err == 0) {
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_SLEWING)) system_health_enable_event(SYSTEM_HEALTH_READ_SLEWING_ENCODER); else system_health_disable_event(SYSTEM_HEALTH_READ_SLEWING_ENCODER);
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_LUFFING)) system_health_enable_event(SYSTEM_HEALTH_READ_LUFFING_ENCODER); else system_health_disable_event(SYSTEM_HEALTH_READ_LUFFING_ENCODER);
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_HOISTING)) system_health_enable_event(SYSTEM_HEALTH_READ_HOISTING_ENCODER); else system_health_disable_event(SYSTEM_HEALTH_READ_HOISTING_ENCODER);
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_ANEMOMETER)) system_health_enable_event(SYSTEM_HEALTH_READ_ANEMOMETER); else system_health_disable_event(SYSTEM_HEALTH_READ_ANEMOMETER);
+		if (sensor_manage_is_enabled(SENSOR_MANAGE_LOAD_ADC)) system_health_enable_event(SYSTEM_HEALTH_READ_LOAD_ADC); else system_health_disable_event(SYSTEM_HEALTH_READ_LOAD_ADC);
 	}
 
 	return err;

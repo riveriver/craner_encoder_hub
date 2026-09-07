@@ -1,0 +1,8 @@
+menuconfig SENSOR_MANAGE_SERVICE
+	bool "Sensor runtime manage service"
+	default y
+	depends on DEVICE_PARAM_SERVER
+	select SHELL
+	help
+	  Persist runtime enable flags for the encoder, anemometer and load
+	  sensor applications. Changes take effect after reboot.

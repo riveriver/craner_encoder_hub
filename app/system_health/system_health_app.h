@@ -15,6 +15,7 @@ enum system_health_event {
 	SYSTEM_HEALTH_READ_LUFFING_ENCODER,
 	SYSTEM_HEALTH_READ_HOISTING_ENCODER,
 	SYSTEM_HEALTH_READ_ANEMOMETER,
+	SYSTEM_HEALTH_READ_LOAD_ADC,
 };
 
 static inline void system_health_update_event(enum system_health_event event)
