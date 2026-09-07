@@ -1,21 +1,8 @@
 config ENABLE_ANEMOMETER_SENSOR
 	bool "Enable anemometer application"
 	default y
-	depends on ANEMOMETER_SAMPLE_SERVICE
 	help
-	  Enable product-level anemometer sampling bindings.
-
-if ENABLE_ANEMOMETER_SENSOR
-
-choice ANEMOMETER_MODEL
-	prompt "Anemometer backend model"
-	default ANEMOMETER_MODEL_MODBUS
-
-config ANEMOMETER_MODEL_MODBUS
-	bool "Modbus anemometer"
-	select ANEMOMETER_MODBUS
-
-endchoice
+	  Enable the combined anemometer and load ADC Modbus application.
 
 config ANEMOMETER_IFACE_NAME
 	string "Anemometer RS485 interface name"
@@ -23,12 +10,12 @@ config ANEMOMETER_IFACE_NAME
 
 config ANEMOMETER_MODBUS_UNIT_ID
 	int "Anemometer Modbus unit id"
-	default 4
+	default 1
 	range 1 247
 
 config ANEMOMETER_MODBUS_BAUD
 	int "Anemometer Modbus baud rate"
-	default 115200
+	default 9600
 
 config ANEMOMETER_MODBUS_RX_TIMEOUT_MS
 	int "Anemometer Modbus RX timeout in milliseconds"
@@ -48,4 +35,17 @@ config ANEMOMETER_MODBUS_REGISTER_COUNT
 	default 5
 	range 5 5
 
-endif
+config ANEMOMETER_THREAD_STACK_SIZE
+	int "Combined anemometer/load Modbus thread stack size"
+	default 2048
+	range 1024 4096
+
+config ANEMOMETER_THREAD_PRIORITY
+	int "Combined anemometer/load Modbus thread priority"
+	default 6
+	range 0 15
+
+config LOAD_ADC_SHELL
+	bool "Enable load ADC shell commands"
+	default y
+	depends on SHELL

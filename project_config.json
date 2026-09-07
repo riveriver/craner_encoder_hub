@@ -3,9 +3,9 @@
   "Base": {
     "BoardName": "craner_general_stm32h743vit6",
     "ProjectName": "craner_sensor_hub",
-    "ProductId": 101,
+    "ProductId": 1,
     "DeviceId": 32,
-    "OtaTarget": "192.168.18.32",
+    "OtaTarget": "192.168.1.32",
     "ZephyrBase": "../zephyrproject/zephyr",
     "ZephyrSdkInstallDir": "../zephyr-sdk-1.0.1/zephyr-sdk-1.0.1"
   },

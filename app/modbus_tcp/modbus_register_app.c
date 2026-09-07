@@ -217,6 +217,12 @@ static struct modbus_data_model_input input_register_table[] = {
 	{ .name = "REG_LUFFING_IMU_PITCH_L", .addr = 0x003F, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
 	{ .name = "REG_LUFFING_IMU_YAW_H", .addr = 0x0040, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
 	{ .name = "REG_LUFFING_IMU_YAW_L", .addr = 0x0041, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
+
+	{ .name = "REG_LOAD_ADC_TIMESTAMP_H", .addr = 0x0042, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
+	{ .name = "REG_LOAD_ADC_TIMESTAMP_L", .addr = 0x0043, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
+	{ .name = "REG_LOAD_ADC_ERROR_CODE", .addr = 0x0044, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
+	{ .name = "REG_LOAD_ADC_OFFLINE_STATUS", .addr = 0x0045, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
+	{ .name = "REG_LOAD_ADC_VALUE", .addr = 0x0046, .default_value = 0, .flags = MODBUS_REG_ACCESS_RW },
 };
 
 static struct modbus_data_model_table app_register_map = {

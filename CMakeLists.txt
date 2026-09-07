@@ -16,7 +16,6 @@ add_subdirectory(module/modbus_data_model)
 add_subdirectory(module/modbus_tcp_server)
 add_subdirectory(module/imu_sample_service)
 add_subdirectory(module/encoder_sample_service)
-add_subdirectory(module/anemometer_sample_service)
 add_subdirectory(app/modbus_tcp)
 add_subdirectory(app/power_manager)
 add_subdirectory(app/system_health)
@@ -42,5 +41,4 @@ target_link_libraries(app PRIVATE
 	modbus_tcp_server
 	imu_sample_service
 	encoder_sample_service
-	anemometer_sample_service
 )
