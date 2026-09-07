@@ -31,7 +31,7 @@ test/
 | Modbus TCP 压力与老化 | [Modbus TCP压力与老化测试用例.md](<test_cases/Modbus TCP压力与老化测试用例.md>) | `module/modbus_tcp_server`、`app/modbus_tcp` |
 | 编码器 | [编码器测试用例.md](test_cases/编码器测试用例.md) | `module/encoder_sample_service`、`app/encoder_app` |
 | 惯性测量单元 | [惯性测量单元测试用例.md](test_cases/惯性测量单元测试用例.md) | `module/imu_sample_service`、`app/luffing_imu_app` |
-| 风速仪 | [风速仪测试用例.md](test_cases/风速仪测试用例.md) | `module/anemometer_sample_service`、`app/anemometer_app` |
+| 风速仪 | [风速仪测试用例.md](test_cases/风速仪测试用例.md) | `app/anemometer_load_app` |
 | 电源管理 | [电源管理测试用例.md](test_cases/电源管理测试用例.md) | `app/power_manager` |
 
 ## 测试工具

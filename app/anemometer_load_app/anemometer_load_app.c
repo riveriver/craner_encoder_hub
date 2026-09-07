@@ -12,7 +12,7 @@
 #include "modbus_data_model.h"
 #include "system_health_app.h"
 
-LOG_MODULE_REGISTER(anemometer_app, CONFIG_LOG_DEFAULT_LEVEL);
+LOG_MODULE_REGISTER(anemometer_load_app, CONFIG_LOG_DEFAULT_LEVEL);
 
 #define ANEMOMETER_IFACE CONFIG_ANEMOMETER_IFACE_NAME
 #define ANEMOMETER_UNIT CONFIG_ANEMOMETER_MODBUS_UNIT_ID
@@ -199,7 +199,7 @@ static void sensor_thread_entry(void *p1, void *p2, void *p3)
 	}
 }
 
-static int anemometer_app_init(void)
+static int anemometer_load_app_init(void)
 {
 	#if !defined(CONFIG_ENABLE_ANEMOMETER_SENSOR) && \
 	    !defined(CONFIG_ENABLE_READ_LOAD_SENSOR)
@@ -214,4 +214,4 @@ static int anemometer_app_init(void)
 	#endif
 }
 
-SYS_INIT(anemometer_app_init, APPLICATION, 95);
+SYS_INIT(anemometer_load_app_init, APPLICATION, 95);

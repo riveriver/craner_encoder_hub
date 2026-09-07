@@ -21,7 +21,7 @@ add_subdirectory(app/power_manager)
 add_subdirectory(app/system_health)
 add_subdirectory(app/luffing_imu_app)
 add_subdirectory(app/encoder_app)
-add_subdirectory(app/anemometer_app)
+add_subdirectory(app/anemometer_load_app)
 
 target_include_directories(app PRIVATE include src app/system_health)
 
