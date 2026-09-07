@@ -34,3 +34,7 @@
 [submodule "module/modbus_data_model"]
 	path = module/modbus_data_model
 	url = https://github.com/HKCRC/modbus_data_model.git
+[submodule "module/shell_mqtt_service"]
+	path = module/shell_mqtt_service
+	url = https://github.com/HKCRC/shell_mqtt_service.git
+	branch = main

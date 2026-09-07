@@ -14,6 +14,7 @@ add_subdirectory(module/device_identity_service)
 add_subdirectory(module/fault_dump_service)
 add_subdirectory(module/modbus_data_model)
 add_subdirectory(module/modbus_tcp_server)
+add_subdirectory(module/shell_mqtt_service)
 add_subdirectory(module/imu_sample_service)
 add_subdirectory(module/encoder_sample_service)
 add_subdirectory(app/modbus_tcp)
@@ -39,6 +40,7 @@ target_link_libraries(app PRIVATE
 	fault_dump_service
 	modbus_data_model
 	modbus_tcp_server
+	shell_mqtt_service
 	imu_sample_service
 	encoder_sample_service
 )
